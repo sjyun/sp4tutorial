@@ -1,0 +1,54 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+apply plugin:  'eclipse'
+apply plugin:  'idea'
+
+ext{
+     javaVersion = '1.7'
+ }
+ 
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+ 
+ 
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+ 
+buildDir = 'build'
+
+
+mainClassName = System.getProperty("mainClass")
+
+
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.springframework:spring-context:4.0.6.RELEASE' 
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    testCompile 'junit:junit:4.11'
+}
+
+eclipse{
+	classpath{
+		downloadSources = true
+		defaultOutputDir = file("${buildDir}/classes/main")
+	}
+	jdt{
+			sourceCompatibility = 1.8
+			targetCompatibility = 1.8
+	}
+ 
+	
+}
+
+
+idea{
+	module{
+		downloadSources = true
+	}
+}
+
+tasks.eclipse.dependsOn cleanEclipse
